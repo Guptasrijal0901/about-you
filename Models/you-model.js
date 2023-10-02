@@ -12,12 +12,12 @@ const youSchema = new mongoose.Schema({
     {type: Date,
     trim: true,
     required:true},
-    intro:
-    {type: String,
-    trim: true,
-    required:true},
     age:
     {type: Number,
+    trim: true,
+    required:true},
+    intro:
+    {type: String,
     trim: true,
     required:true},
     experience:

@@ -4,12 +4,37 @@ const collection = require ("./Models/you-model")
 const path = require ("path")
 const dotenv = require ("dotenv");
 dotenv.config();
-
-
 const app = express();
 app.use(express.json());
-app.get("/get" , (req, res)=>{
-    res.json("api running")
+
+//create api 
+app.post ("/post", async(req, res)=>{
+  try {
+    const yourdata = {
+      name : req.body.name,
+      email : req.body.email,
+      date : req.body.date,
+      age : req.body.age,
+      intro : req.body.intro,
+      experience : req.body.experience
+    }
+    console.log(yourdata);
+    const data = new collection(yourdata);
+    await data.save()
+    return res.status(200).json({success: true, message:"You data is saved."})
+  } catch (error) {
+    console.log(error);
+  }
+})
+//read 
+app.get("/api/get", async (req, res)=>{
+  try {
+    const data = await collection.find().sort({ createdAt : -1})
+    return res.status(200).json({ success: true, data: data});
+    } catch (error) {
+    console.log(error)
+    return res.status(400).json({ success: false , error : error.message })
+  }
 })
 
 // connectDatabase()
